@@ -7,7 +7,7 @@
 	lnk.innerHTML = '<img src="https://www.google.com/favicon.ico">';
 	wnd.appendChild(lnk);
 
-	wnd.innerHTML += '&nbsp';
+	wnd.appendChild(document.createTextNode(' '));
 
 	var lnkWiki = document.createElement('a');
 	lnkWiki.innerHTML = '<img src="http://en.wikipedia.org/favicon.ico">';
@@ -17,12 +17,10 @@
 	document.addEventListener('mouseup', function(e) {
 		var txt = window.getSelection().toString().trim();
 		if (txt && !wnd.parentNode) {
-			debugger;
-			//lnk.innerHTML = 'Hledat: ' + txt;
 			lnk.href = 'http://www.google.com/search?q=%s&sourceid=opera&num=%i&ie=utf-8&oe=utf-8'.replace('%s', txt);
 			lnkWiki.href = 'http://en.wikipedia.org/wiki/Special:Search?search=%s'.replace('%s', txt);
 			wnd.style.left = e.pageX - 40 + 'px';
-			wnd.style.top = e.pageY - 50 + 'px';
+			wnd.style.top = e.pageY - 55 + 'px';
 			document.body.appendChild(wnd);
 		} 
 	});
