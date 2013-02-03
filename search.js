@@ -8,7 +8,8 @@
 
 	document.addEventListener('mouseup', function(e) {
 		var txt = window.getSelection().toString().trim();
-		if (txt) {
+		if (txt && !wnd.parentNode) {
+			debugger;
 			lnk.innerHTML = 'Hledat: ' + txt;
 			lnk.href = 'http://www.google.com/search?q=%s&sourceid=opera&num=%i&ie=utf-8&oe=utf-8'.replace('%s', txt);
 			wnd.style.left = e.pageX - 40 + 'px';
