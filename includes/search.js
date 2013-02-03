@@ -12,9 +12,13 @@
 			icon: 'http://en.wikipedia.org/favicon.ico',
 			url: 'http://en.wikipedia.org/wiki/Special:Search?search=%s'
 		},
-		{
+		/*{
 			icon: 'http://s1.ikiwq.com/shared/img/favicon.png',
 			url: 'http://www.qwiki.com/search?query=%s&watch=watch'
+		},*/
+		{
+			icon: 'http://www.google.com/moon/images/bar_icon_link.gif',
+			url: '%s'
 		},
 		{
 			icon: 'http://translate.google.com/favicon.ico',
