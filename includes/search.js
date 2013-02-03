@@ -14,7 +14,7 @@
 		},
 		{
 			icon: 'http://s1.ikiwq.com/shared/img/favicon.png',
-			url: 'http://www.qwiki.com/search?query=%s&watch=watch'
+			url: 'http://www.qwiki.com/q/%s'
 		},
 		{
 			icon: 'http://translate.google.com/favicon.ico',
