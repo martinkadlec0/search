@@ -27,7 +27,7 @@
 	document.addEventListener('mouseup', function(e) {
 		var txt = window.getSelection().toString().trim();
 		if (txt && !wnd.parentNode && e.button == 0) {
-			txt = window.encodeURIComponent(txt);
+			txt = txt == '%s' ? txt: window.encodeURIComponent(txt);
 			setLinks(txt);
 			document.body.appendChild(wnd);
 			var halfWidth = wnd.offsetWidth / 2;
