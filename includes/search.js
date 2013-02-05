@@ -16,7 +16,7 @@
 	var i;
 	for (i=0; i<icons.length; i++) {
 		icons[i].lnk = document.createElement('a');
-		icons[i].lnk.innerHTML = '<img src="' + icons[i].icon + '">';
+		icons[i].lnk.innerHTML = '<img width="16" height="16" src="' + icons[i].icon + '">';
 		icons[i].lnk.target = '_blank';
 		wnd.appendChild(icons[i].lnk);	
 		if (i + 1 < icons.length) {
