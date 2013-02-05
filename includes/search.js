@@ -1,30 +1,17 @@
 (function() {
 
-	var wnd = document.createElement('unknown');
-	wnd.style.cssText = 'box-sizing: content-box !important; display: block; z-index: 99999999; position: absolute; word-spacing: 5px; background: white; border: 3px solid #ccc; min-width: 100px; text-align: center; padding: 10px; height: 15px; border-radius: 4px; box-shadow: 0 0 5px black;';
-
-	var icons = [
-		{
-			icon: 'https://www.google.com/favicon.ico',
-			url: 'http://www.google.com/search?q=%s&sourceid=opera&num=%i&ie=utf-8&oe=utf-8'
-		},
-		{
-			icon: 'http://en.wikipedia.org/favicon.ico',
-			url: 'http://en.wikipedia.org/wiki/Special:Search?search=%s'
-		},
-		/*{
-			icon: 'http://s1.ikiwq.com/shared/img/favicon.png',
-			url: 'http://www.qwiki.com/search?query=%s&watch=watch'
-		},*/
-		{
-			icon: 'http://www.google.com/moon/images/bar_icon_link.gif',
-			url: '%s'
-		},
-		{
-			icon: 'http://translate.google.com/favicon.ico',
-			url: 'http://translate.google.com/#en/cs/%s'
+	function saveParse(txt) {
+		try {
+			return JSON.parse(txt);
+		} catch(e) {
+			return null;
 		}
-	];
+	};
+
+	var wnd = document.createElement('unknown');
+	wnd.style.cssText = 'box-sizing: content-box !important; display: block; z-index: 99999999; position: absolute; word-spacing: 5px; background: white; border: 3px solid #ccc; min-width: 10px; text-align: center; padding: 10px; height: 15px; border-radius: 4px; box-shadow: 0 0 5px black;';
+
+	var icons = saveParse(widget.preferences.data) || [];
 
 	var i;
 	for (i=0; i<icons.length; i++) {
@@ -42,12 +29,14 @@
 		if (txt && !wnd.parentNode && e.button == 0) {
 			txt = window.encodeURIComponent(txt);
 			setLinks(txt);
-			wnd.style.left = (e.pageX - 60 < 0 ? 0 : e.pageX - 60) + 'px';
-			wnd.style.top = (e.pageY - 55 < 0 ? 0 : e.pageY - 55) + 'px';
 			document.body.appendChild(wnd);
+			var halfWidth = wnd.offsetWidth / 2;
+			wnd.style.left = (e.pageX - halfWidth < 0 ? 0 : e.pageX - halfWidth) + 'px';
+			wnd.style.top = (e.pageY - 55 < 0 ? 0 : e.pageY - 55) + 'px';
+			
 		} 
 	});
-
+;
 	document.addEventListener('mousedown', function(e) {
 		if (wnd.parentNode && !isAncestor(e.target, wnd)) {
 			document.body.removeChild(wnd);

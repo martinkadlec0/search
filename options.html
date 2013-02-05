@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+	<meta charset="utf-8">
+	<title>Window Search options</title>
+	<style>
+		body {
+			margin: 0;
+			margin-top: 20px;
+			background: #eee;
+		}
+		#main {
+			width: 900px;
+			margin: 0 auto;
+			background: white;
+			box-shadow: 0 0 5px black;
+			padding: 20px;
+		}
+		h1 {
+			margin: 0;
+			padding: 0;
+			font-size: 25px;
+			color: darkblue;
+			padding: 5px 0;
+		}
+		.item {
+
+		}
+		input[type=text] {
+			width: 420px;
+			padding: 3px;
+			box-sizing: border-box;
+			height: 30px;
+			line-height: 25px;
+			border: 1px solid rgba(0, 0, 0, 0);
+		}
+		input[type=text]:hover {
+			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		input[type=text] {
+			margin: 0;
+		}
+	</style>
+	<script>
+	var d = document;
+	var p = widget.preferences;
+	var buttons;
+
+	JSON.saveParse = function(txt) {
+		try {
+			return JSON.parse(txt);
+		} catch(e) {
+			return null;
+		}
+	};
+
+	d.addEventListener('DOMContentLoaded', init);
+
+	function init() {
+		buttons = d.querySelector('#buttons');
+		var data = JSON.saveParse(p.data) || [];
+		for (var i=0; i<data.length; i++) {
+			var ele = readTpl('btn_tpl', data[i]);
+			ele.className = 'item';
+			buttons.appendChild(ele);
+		}
+	}
+
+	function readTpl(tplSource, data) {
+		var newEle = d.createElement('div');
+		var tmp = d.getElementById(tplSource).innerHTML;
+		
+		newEle.innerHTML = tmp.replace(/\{\{([^{]+)\}\}/gm, function(all, name) {
+			return data[name.trim()] || '';
+		});
+
+		return newEle;
+
+	}
+
+	
+
+	d.addEventListener('focusOut', function(e) {
+		var newData = [];
+
+		var items = d.querySelectorAll('.item');
+		var i, j, url, icon;
+		for (i=0, j=items.length; i<j; i++) {
+			url = items[i].querySelector('.tpl-url').value;
+			icon = items[i].querySelector('.tpl-icon').value;
+
+			if (url && icon) {
+				newData.push({ url: url, icon: icon });	
+			}
+		}
+
+		p.data = JSON.stringify(newData);
+	});
+
+	d.addEventListener('click', function(e) {
+		var t = e.target;
+		if (t.id == 'reset') {
+			if (confirm('Určitě chcete vrátit výchozí nastavení?' )) {
+				opera.extension.postMessage({ action: 'reset' }) ;
+				window.location.reload();
+			}
+		} else if (t.id == 'add') {
+			var ele = readTpl('btn_tpl', {});
+			ele.className = 'item';
+			buttons.appendChild(ele);
+		}
+	});	
+
+	</script>
+</head>
+<body>
+	<div id="main">
+		<h1>Options</h1>
+		<div id="buttons">
+
+		</div>
+		<br>
+		<button id="add">Add new</button> <button id="reset">Reset defaults</button>
+	</div>
+
+	<script id="btn_tpl" type="template">
+		<input type="text" placeholder="Sem vložte adresu pro vyhledávání" class="tpl-url" value="{{url}}">
+		<input type="text" placeholder="Sem vložte adresu pro ikonu" class="tpl-icon" value="{{icon}}">
+	</script>
+</body>
+</html>
