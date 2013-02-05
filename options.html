@@ -27,7 +27,7 @@
 
 		}
 		input[type=text] {
-			width: 420px;
+			width: 400px;
 			padding: 3px;
 			box-sizing: border-box;
 			height: 30px;
@@ -82,7 +82,9 @@
 
 	
 
-	d.addEventListener('focusOut', function(e) {
+	d.addEventListener('focusOut', saveData);
+
+	function saveData(e) {
 		var newData = [];
 
 		var items = d.querySelectorAll('.item');
@@ -97,12 +99,12 @@
 		}
 
 		p.data = JSON.stringify(newData);
-	});
+	}
 
 	d.addEventListener('click', function(e) {
 		var t = e.target;
 		if (t.id == 'reset') {
-			if (confirm('Určitě chcete vrátit výchozí nastavení?' )) {
+			if (confirm('Do you really want reset defaults?' )) {
 				opera.extension.postMessage({ action: 'reset' }) ;
 				window.location.reload();
 			}
@@ -110,6 +112,12 @@
 			var ele = readTpl('btn_tpl', {});
 			ele.className = 'item';
 			buttons.appendChild(ele);
+		} else if (t.id == 'up' && t.parentNode.previousElementSibling) {
+			buttons.insertBefore(t.parentNode, t.parentNode.previousElementSibling);
+			saveData();
+		} else if (t.id == 'down' && t.parentNode.nextElementSibling) {
+			buttons.insertBefore(t.parentNode.nextElementSibling, t.parentNode);
+			saveData();
 		}
 	});	
 
@@ -126,8 +134,9 @@
 	</div>
 
 	<script id="btn_tpl" type="template">
-		<input type="text" placeholder="Sem vložte adresu pro vyhledávání" class="tpl-url" value="{{url}}">
-		<input type="text" placeholder="Sem vložte adresu pro ikonu" class="tpl-icon" value="{{icon}}">
+		<input type="text" placeholder="Put URL for search here" class="tpl-url" value="{{url}}">
+		<input type="text" placeholder="Put icon URL here" class="tpl-icon" value="{{icon}}">
+		<button id="up">Up</button> <button id="down">Down</button>
 	</script>
 </body>
 </html>
