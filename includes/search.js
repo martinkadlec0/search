@@ -40,6 +40,7 @@
 	document.addEventListener('mouseup', function(e) {
 		var txt = window.getSelection().toString().trim();
 		if (txt && !wnd.parentNode && e.button == 0) {
+			txt = window.encodeURIComponent(txt);
 			setLinks(txt);
 			wnd.style.left = (e.pageX - 60 < 0 ? 0 : e.pageX - 60) + 'px';
 			wnd.style.top = (e.pageY - 55 < 0 ? 0 : e.pageY - 55) + 'px';
