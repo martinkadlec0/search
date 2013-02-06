@@ -27,7 +27,7 @@
 	document.addEventListener('mouseup', function(e) {
 		var txt = window.getSelection().toString().trim();
 		if (txt && !wnd.parentNode && e.button == 0) {
-			txt = txt == '%s' ? txt: window.encodeURIComponent(txt);
+			//txt = txt == '%s' ? txt: window.encodeURIComponent(txt);
 			setLinks(txt);
 			document.body.appendChild(wnd);
 			var halfWidth = wnd.offsetWidth / 2;
@@ -44,8 +44,10 @@
 	});
 
 	function setLinks(txt) {
+		var tmp;
 		for (var i=0; i<icons.length; i++) {
-			icons[i].lnk.href = icons[i].url.replace('%s', txt);
+			tmp = icons[i].url == '%s' ? txt : window.encodeURIComponent(txt);
+			icons[i].lnk.href = icons[i].url.replace('%s', tmp);
 		}
 	}
 
