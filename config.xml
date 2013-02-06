@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <widget xmlns="http://www.w3.org/ns/widgets" defaultlocale="en">
   <name>Search Window</name>
-  <description>Při označení textu vyskočí pomocné okénko pro vyhledávání, vysvětlení či překlad textu.</description>
+  <description>Special window, which appears on selecting a text, with helpfull icons for searching, translating and more.</description>
   <author href="http://my.opera.com/BS-Harou/blog">BS-Harou (Martin Kadlec)</author>
   <icon src="icons/icon64.png"/>
 </widget>
