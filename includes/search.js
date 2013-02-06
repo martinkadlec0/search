@@ -36,7 +36,7 @@
 			
 		} 
 	});
-;
+
 	document.addEventListener('mousedown', function(e) {
 		if (wnd.parentNode && !isAncestor(e.target, wnd)) {
 			document.body.removeChild(wnd);
