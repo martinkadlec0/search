@@ -6,25 +6,43 @@
 	<style>
 		body {
 			margin: 0;
-			margin-top: 20px;
-			background: #eee;
+			margin-top: 0px;
+			background: #fff;
 		}
 		#main {
-			width: 900px;
-			margin: 0 auto;
-			background: white;
-			box-shadow: 0 0 5px black;
+			
+			background: #e2e2e2;
 			padding: 20px;
+		}
+		header {
+			width: 900px;
+			margin: 0px auto;
+			background: white;
+		}
+		.middle {
+			width: 900px;
+			margin: 0px auto;
+			background: #fff;
+			border: 1px solid #aaa;
+			border-radius: 5px;
+			padding: 15px;
+			box-shadow: inset 0 0 12px #d5d5d5;
 		}
 		h1 {
 			margin: 0;
 			padding: 0;
 			font-size: 25px;
-			color: darkblue;
-			padding: 5px 0;
+			color: #000;
+			font-family: "Arial";
+			text-shadow: 0 1px 0 #ccc;
+			padding: 20px 0;
 		}
-		.item {
 
+		.item {
+			padding: 2px 0;
+		}
+		.item:not(:last-child) {
+			border-bottom: 1px dotted #ccc;
 		}
 		input[type=text] {
 			width: 400px;
@@ -34,13 +52,50 @@
 			line-height: 25px;
 			border: 1px solid rgba(0, 0, 0, 0);
 		}
-		input[type=text]:hover, input[type=text]:focus {
+		input[type=text]:hover {
 			border: 1px solid #ccc;
+			border-radius: 4px;
+		}
+
+		input[type=text]:focus {
+			border: 1px solid #aaa;
 			border-radius: 4px;
 		}
 
 		input[type=text] {
 			margin: 0;
+		}
+
+		button {
+			background: #009900;
+			border: 1px solid #005500;
+			color: white;
+			font-family: Arial;
+			font-size: 15px;
+			cursor: pointer;
+			padding: 5px 10px;
+		}
+
+		button:hover {
+			border: 1px solid #002200;
+		}
+
+		.item button {
+			padding: 3px 5px;
+			font-size: 12px;
+		}
+
+		.rad {
+			display: inline-block;
+			width: 7px;
+			height: 7px;
+			background: #009900;
+			border-radius: 10px;
+		}
+
+		img {
+			vertical-align: middle;
+			margin-right: 20px;
 		}
 	</style>
 	<script>
@@ -124,16 +179,22 @@
 	</script>
 </head>
 <body>
+	<header>
+		<h1><img src="icons/icon64.png">Options</h1>
+	</header>
 	<div id="main">
-		<h1>Options</h1>
-		<div id="buttons">
+		<div class="middle">
+			
+			<div id="buttons">
 
-		</div>
-		<br>
-		<button id="add">Add new</button> <button id="reset">Reset defaults</button>
+			</div>
+			<br>
+			<button id="add">Add new</button> <button id="reset">Reset defaults</button>
+		<div>
 	</div>
 
 	<script id="btn_tpl" type="template">
+		<div class="rad"></div>
 		<input type="text" placeholder="Put URL for search here" class="tpl-url" value="{{url}}">
 		<input type="text" placeholder="Put icon URL here" class="tpl-icon" value="{{icon}}">
 		<button id="up">Up</button> <button id="down">Down</button>
