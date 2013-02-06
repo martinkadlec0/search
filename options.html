@@ -45,7 +45,7 @@
 			border-bottom: 1px dotted #ccc;
 		}
 		input[type=text] {
-			width: 400px;
+			width: 385px;
 			padding: 3px;
 			box-sizing: border-box;
 			height: 30px;
@@ -76,13 +76,20 @@
 			padding: 5px 10px;
 		}
 
+		#del {
+			background: #CC0F16;
+			padding: 2px 8px;
+			font-family: Tahoma;
+		}
+
 		button:hover {
 			border: 1px solid #002200;
 		}
 
 		.item button {
-			padding: 3px 5px;
+			padding: 2px 5px;
 			font-size: 12px;
+			height: 25px;
 		}
 
 		.rad {
@@ -96,6 +103,16 @@
 		img {
 			vertical-align: middle;
 			margin-right: 20px;
+		}
+
+		.col-title {
+			display: inline-block;
+			width: 387px;
+			font-weight: bold;
+			padding-left: 14px;
+			color: #111;
+			box-sizing: border-box;
+			font-size: 13px;
 		}
 	</style>
 	<script>
@@ -173,6 +190,10 @@
 		} else if (t.id == 'down' && t.parentNode.nextElementSibling) {
 			buttons.insertBefore(t.parentNode.nextElementSibling, t.parentNode);
 			saveData();
+		} else if (t.id == 'del') {
+			buttons.removeChild(t.parentNode);
+			saveData();
+			saveData();
 		}
 	});	
 
@@ -184,7 +205,7 @@
 	</header>
 	<div id="main">
 		<div class="middle">
-			
+			<div class="col-title">Search URL</div> <div class="col-title">Icon URL</div>
 			<div id="buttons">
 
 			</div>
@@ -197,7 +218,7 @@
 		<div class="rad"></div>
 		<input type="text" placeholder="Put URL for search here" class="tpl-url" value="{{url}}">
 		<input type="text" placeholder="Put icon URL here" class="tpl-icon" value="{{icon}}">
-		<button id="up">Up</button> <button id="down">Down</button>
+		<button id="up">Up</button> <button id="down">Down</button> <button id="del">x</button>
 	</script>
 </body>
 </html>
