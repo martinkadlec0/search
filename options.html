@@ -120,11 +120,38 @@
 			color: #999;
 			font-size: 10px;
 		}
+
+		.menu {			
+			min-height: 50px;
+			background: #fff;
+			border: 1px solid #999;
+			border-radius: 4px;
+			box-shadow: 0 0 2px #555;
+			position: absolute;
+		}
+		.menu-item {
+			width: 100%;
+			margin: 0;
+			padding: 5px 10px;
+			box-sizing: border-box;
+			cursor: pointer;
+			font-weight: bold;
+			font-size: 13px;
+			color: #111;
+			text-shadow: 0 1px 0 white;
+		}
+		.menu-item:hover {
+			background: #e1e1e1;
+		}
+		.menu-item:not(:last-of-type) {
+			border-bottom: 1px solid #ccc;
+		}
+
 	</style>
 	<script>
 	var d = document;
 	var p = widget.preferences;
-	var buttons;
+	var buttons, menu;
 
 	JSON.saveParse = function(txt) {
 		try {
@@ -137,6 +164,7 @@
 	d.addEventListener('DOMContentLoaded', init);
 
 	function init() {
+		menu = d.querySelector('.menu');
 		buttons = d.querySelector('#buttons');
 		var data = JSON.saveParse(p.data) || [];
 		for (var i=0; i<data.length; i++) {
@@ -162,7 +190,7 @@
 
 	d.addEventListener('focusOut', saveData);
 
-	function saveData(e) {
+	function saveData(e, list) {
 		var newData = [];
 
 		var items = d.querySelectorAll('.item');
@@ -176,10 +204,16 @@
 			}
 		}
 
+		if (list) {
+			newData = newData.concat(list)
+		}
+
 		p.data = JSON.stringify(newData);
 	}
 
 	d.addEventListener('click', function(e) {
+
+
 		var t = e.target;
 		if (t.id == 'reset') {
 			if (confirm('Do you really want reset defaults?' )) {
@@ -199,8 +233,35 @@
 		} else if (t.id == 'del') {
 			buttons.removeChild(t.parentNode);
 			saveData();
-			saveData();
-		}
+		} else if (t.id == 'export') {
+			alert(p.data);
+		} else if (t.id == 'import') {
+			var list = prompt('Put exported string here: ');
+			tryParse = JSON.saveParse(list);
+			if (Array.isArray(tryParse)) {
+				p.data =  list;
+				window.location.reload();	
+			} else {
+				alert('wrong format!');
+			}
+		} else if (t.id == 'append') {
+			var list = prompt('Put exported string here: ');
+			tryParse = JSON.saveParse(list);
+			if (Array.isArray(tryParse)) {
+				saveData(e, tryParse);
+				window.location.reload();	
+			} else {
+				alert('wrong format!');
+			}
+		} 
+
+		if (!menu.hidden) {
+			menu.hidden = true;
+		} else if (t.id == 'more') {
+			menu.hidden = false;
+			menu.style.top = t.offsetTop + 'px';
+			menu.style.left = t.offsetLeft + t.offsetWidth + 5 + 'px';
+		} 
 	});	
 
 	</script>
@@ -216,12 +277,21 @@
 
 			</div>
 			<br>
-			<button id="add">Add new</button> <button id="reset">Reset defaults</button>
+			<button id="add">Add new</button> <button id="more">More</button>
+
+			
 		</div>
 	</div>
 	<footer>
 		Copyright 2013 Martin Kadlec
 	</footer>
+
+	<div class="menu" hidden>
+		<div class="menu-item" id="reset">Reset defaults</div>
+		<div class="menu-item" id="export">Export list</div>
+		<div class="menu-item" id="import">Import list</div>
+		<div class="menu-item" id="append">Append list</div>
+	</div>
 
 	<script id="btn_tpl" type="template">
 		<div class="rad"></div>
