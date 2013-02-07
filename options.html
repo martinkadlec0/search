@@ -212,8 +212,10 @@
 			icon = items[i].querySelector('.tpl-icon').value;
 			disabled = !items[i].querySelector('.tpl-enabled').checked;
 
-			if (url && icon) {
-				newData.push({ url: url, icon: icon, disabled: disabled });	
+			if (url && icon && disabled) {
+				newData.push({ url: url, icon: icon, disabled: true });	
+			} else if (url && icon) {
+				newData.push({ url: url, icon: icon });	
 			}
 		}
 
@@ -300,10 +302,10 @@
 	</footer>
 
 	<div class="menu" hidden>
-		<div class="menu-item" id="reset">Reset defaults</div>
-		<div class="menu-item" id="export">Export list</div>
-		<div class="menu-item" id="import">Import list</div>
-		<div class="menu-item" id="append">Append list</div>
+		<div unselectable="on" class="menu-item" id="reset">Reset defaults</div>
+		<div unselectable="on" class="menu-item" id="export">Export list</div>
+		<div unselectable="on" class="menu-item" id="import">Import list</div>
+		<div unselectable="on" class="menu-item" id="append">Append list</div>
 	</div>
 
 	<script id="btn_tpl" type="template">
