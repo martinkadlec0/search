@@ -256,7 +256,7 @@
 			if (Array.isArray(tryParse)) {
 				p.data =  list;
 				window.location.reload();	
-			} else {
+			} else if (list) {
 				alert('wrong format!');
 			}
 		} else if (t.id == 'append') {
@@ -265,7 +265,7 @@
 			if (Array.isArray(tryParse)) {
 				saveData(e, tryParse);
 				window.location.reload();	
-			} else {
+			} else if (list) {
 				alert('wrong format!');
 			}
 		} 
