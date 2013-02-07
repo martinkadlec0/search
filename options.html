@@ -45,7 +45,7 @@
 			border-bottom: 1px dotted #ccc;
 		}
 		input[type=text] {
-			width: 385px;
+			width: 375px;
 			padding: 3px;
 			box-sizing: border-box;
 			height: 30px;
@@ -64,6 +64,10 @@
 
 		input[type=text] {
 			margin: 0;
+		}
+
+		input[type=checkbox] {
+			margin: 0 6px 0 3px;
 		}
 
 		button {
@@ -107,12 +111,16 @@
 
 		.col-title {
 			display: inline-block;
-			width: 387px;
+			width: 375px;
 			font-weight: bold;
-			padding-left: 14px;
+			padding-left: 1px;
 			color: #111;
 			box-sizing: border-box;
 			font-size: 13px;
+		}
+		.col-title:first-of-type {
+			width: 25px;
+			padding-left: 0;
 		}
 		footer {
 			padding-top: 15px;
@@ -148,6 +156,7 @@
 		}
 
 	</style>
+	<script src="scripts/mustache.js"></script>
 	<script>
 	var d = document;
 	var p = widget.preferences;
@@ -178,9 +187,7 @@
 		var newEle = d.createElement('div');
 		var tmp = d.getElementById(tplSource).innerHTML;
 		
-		newEle.innerHTML = tmp.replace(/\{\{([^{]+)\}\}/gm, function(all, name) {
-			return data[name.trim()] || '';
-		});
+		newEle.innerHTML = Mustache.render(tmp, data);
 
 		return newEle;
 
@@ -189,6 +196,11 @@
 	
 
 	d.addEventListener('focusOut', saveData);
+	d.addEventListener('change', function(e) {
+		if (e.target.type == 'checkbox') {
+			saveData();
+		}
+	});
 
 	function saveData(e, list) {
 		var newData = [];
@@ -198,9 +210,10 @@
 		for (i=0, j=items.length; i<j; i++) {
 			url = items[i].querySelector('.tpl-url').value;
 			icon = items[i].querySelector('.tpl-icon').value;
+			disabled = !items[i].querySelector('.tpl-enabled').checked;
 
 			if (url && icon) {
-				newData.push({ url: url, icon: icon });	
+				newData.push({ url: url, icon: icon, disabled: disabled });	
 			}
 		}
 
@@ -272,7 +285,7 @@
 	</header>
 	<div id="main">
 		<div class="middle">
-			<div class="col-title">Search URL</div> <div class="col-title">Icon URL</div>
+			<div class="col-title">Use</div>	<div class="col-title">Search URL</div> <div class="col-title">Icon URL</div>
 			<div id="buttons">
 
 			</div>
@@ -294,9 +307,10 @@
 	</div>
 
 	<script id="btn_tpl" type="template">
-		<div class="rad"></div>
+		<input type="checkbox" {{^disabled}}checked{{/disabled}} class="tpl-enabled">
 		<input type="text" placeholder="Put URL for search here" class="tpl-url" value="{{url}}">
 		<input type="text" placeholder="Put icon URL here" class="tpl-icon" value="{{icon}}">
+		
 		<button id="up">Up</button> <button id="down">Down</button> <button id="del">x</button>
 	</script>
 </body>

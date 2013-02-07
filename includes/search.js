@@ -15,12 +15,14 @@
 
 	var i;
 	for (i=0; i<icons.length; i++) {
-		icons[i].lnk = document.createElement('a');
-		icons[i].lnk.innerHTML = '<img style="padding: 0; border: 0; margin: 0; float: none;" width="16" height="16" src="' + icons[i].icon + '">';
-		icons[i].lnk.target = '_blank';
-		wnd.appendChild(icons[i].lnk);	
-		if (i + 1 < icons.length) {
-			wnd.appendChild(document.createTextNode(' '));
+		if (!icons[i].disabled) {
+			icons[i].lnk = document.createElement('a');
+			icons[i].lnk.innerHTML = '<img style="padding: 0; border: 0; margin: 0; float: none;" width="16" height="16" src="' + icons[i].icon + '">';
+			icons[i].lnk.target = '_blank';
+			wnd.appendChild(icons[i].lnk);	
+			if (i + 1 < icons.length) {
+				wnd.appendChild(document.createTextNode(' '));
+			}
 		}
 	}
 
@@ -46,8 +48,10 @@
 	function setLinks(txt) {
 		var tmp;
 		for (var i=0; i<icons.length; i++) {
-			tmp = icons[i].url == '%s' ? txt : window.encodeURIComponent(txt);
-			icons[i].lnk.href = icons[i].url.replace('%s', tmp);
+			if (!icons[i].disabled) {
+				tmp = icons[i].url == '%s' ? txt : window.encodeURIComponent(txt);
+				icons[i].lnk.href = icons[i].url.replace('%s', tmp);
+			}
 		}
 	}
 
