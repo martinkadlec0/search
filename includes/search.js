@@ -49,8 +49,8 @@
 		var tmp;
 		for (var i=0; i<icons.length; i++) {
 			if (!icons[i].disabled) {
-				tmp = icons[i].url == '%s' ? txt : window.encodeURIComponent(txt);
-				icons[i].lnk.href = icons[i].url.replace('%s', tmp);
+				tmp = window.encodeURIComponent(txt);
+				icons[i].lnk.href = icons[i].url.replace('%s', tmp).replace('%t', txt);
 			}
 		}
 	}
