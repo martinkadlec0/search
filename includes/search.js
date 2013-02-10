@@ -13,11 +13,17 @@
 
 	var icons = saveParse(widget.preferences.data) || [];
 
+	var resetCSS = 'padding: 0; border: 0; margin: 0; float: none; font-size: 0; background: transparent;';
+
 	var i;
 	for (i=0; i<icons.length; i++) {
 		if (!icons[i].disabled) {
 			icons[i].lnk = document.createElement('a');
-			icons[i].lnk.innerHTML = '<img style="padding: 0; border: 0; margin: 0; float: none;" width="16" height="16" src="' + icons[i].icon + '">';
+			icons[i].lnk.style.cssText = resetCSS + ' display: inline;';
+			icons[i].lnk.innerHTML = '<img style="' + resetCSS + ' display: inline-block;" width="16" height="16" src="' + icons[i].icon + '">';
+			if (icons[i].title) {
+				icons[i].lnk.title = icons[i].title;
+			}
 			icons[i].lnk.target = '_blank';
 			wnd.appendChild(icons[i].lnk);	
 			if (i + 1 < icons.length) {
@@ -27,21 +33,31 @@
 	}
 
 	document.addEventListener('mouseup', function(e) {
+		// When you click on link with selected text, the selection remains -> wnd apperas again
+		// lastSelection variable is supposed to fix this problem
 		var txt = window.getSelection().toString().trim();
-		if (txt && !wnd.parentNode && e.button == 0) {
-			//txt = txt == '%s' ? txt: window.encodeURIComponent(txt);
-			setLinks(txt);
-			document.body.appendChild(wnd);
-			var halfWidth = wnd.offsetWidth / 2;
-			wnd.style.left = (e.pageX - halfWidth < 0 ? 0 : e.pageX - halfWidth) + 'px';
-			wnd.style.top = (e.pageY - 55 < 0 ? 0 : e.pageY - 55) + 'px';
+		if (txt != lastSelection) {
 			
-		} 
+			if (txt && !wnd.parentNode && e.button == 0) {
+				setLinks(txt);
+				document.body.appendChild(wnd);
+				var halfWidth = wnd.offsetWidth / 2;
+				wnd.style.left = (e.pageX - halfWidth < 0 ? 0 : e.pageX - halfWidth) + 'px';
+				wnd.style.top = (e.pageY - 55 < 0 ? 0 : e.pageY - 55) + 'px';
+				
+			} 
+		} else {
+			lastSelection = '';
+		}
 	});
 
+	var lastSelection = '';
 	document.addEventListener('mousedown', function(e) {
+		lastSelection = '';
+		var txt = window.getSelection().toString().trim();
 		if (wnd.parentNode && !isAncestor(e.target, wnd)) {
 			document.body.removeChild(wnd);
+			lastSelection = txt;
 		}
 	});
 
