@@ -20,6 +20,8 @@ You can use two special symbols in Search URL.
   * %s - encoded selected string
   * %t - non-encoded selected string
 
+Most of the times, you will want to use the %s symbol. The %t is usefull for example for creating "Go to" button by setting the Search URL simply to "%t".
+
 Also, you can use javascript-urls to perform more complex actions, like copying selected text. Here is an example how to do that:
 
   * Firstly you have to enable access to the clipboard in opera:config -> opera:config#UserPrefs|LetSiteAccessClipboard
