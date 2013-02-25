@@ -19,3 +19,10 @@ You can use two special symbols in Search URL.
 
   * %s - encoded selected string
   * %t - non-encoded selected string
+
+Also, you can use javascript-urls to perform more complex actions, like copying selected text. Here is any example how to do that
+
+  * Firstly you have to enable access to the clipboard in opera:config -> opera:config#UserPrefs|LetSiteAccessClipboard
+  * Then create new item in the options page and set Search URL to -> javascript:void(document.execCommand("copy"))
+  * As icon you can use e.g. http://www.patterson-consulting.net/public/onlinedocs/test_design_studio/icon_copy.gif
+  * Done, you can now copy text by clicking on the icon :)
