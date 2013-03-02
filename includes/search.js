@@ -13,7 +13,7 @@
 
 	var icons = saveParse(widget.preferences.data) || [];
 
-	var resetCSS = 'padding: 0; border: 0; margin: 0; float: none; font-size: 0; background: transparent;';
+	var resetCSS = 'padding: 0; border: 0; margin: 0; float: none; font-size: 0; background: transparent; vertical-align: top; ';
 
 	var i;
 	for (i=0; i<icons.length; i++) {
