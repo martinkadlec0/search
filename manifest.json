@@ -1,0 +1,20 @@
+{
+	"name": "Search Window",
+	"developer": {
+		"name": "BS-Harou (Martin Kadlec)",
+		"url": "http://my.opera.com/BS-Harou/blog"
+	},
+	"description": "Special window, which appears on selecting a text, with helpfull icons for searching, translating and more!",
+	"manifest_version": 2,
+	"version": "1.0",
+	"background": {
+		"page": "index.html"
+	},
+	"web_accessible_resources": [""],
+	"permissions": ["https://*/*", "storage", "tabs", "http://*/*", "opera://favicon/*"],
+	"content_security_policy": "script-src 'self' 'unsafe-eval'; object-src 'unsafe-eval';",
+	"options_page": "options.html",
+	"icons": {
+        "64": "icons/icon64.png"
+    }
+}
