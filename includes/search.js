@@ -15,6 +15,7 @@
 	var icons = [];
 	chrome.storage.local.get('data', function(store) {
 		icons = store.data || [];
+		alert(store.data.length);
 	});
 
 	var resetCSS = 'padding: 0; border: 0; margin: 0; float: none; font-size: 0; background: transparent; vertical-align: top; ';

@@ -6,7 +6,7 @@ p.get('data', function(store) {
 	
 
 function reset() {
-	p.set({'data': JSON.stringify([
+	p.set({'data': [
 		{
 			icon: 'https://www.google.com/favicon.ico',
 			url: 'http://www.google.com/search?q=%s&sourceid=opera&ie=utf-8&oe=utf-8'
@@ -27,7 +27,7 @@ function reset() {
 			icon: 'http://translate.google.com/favicon.ico',
 			url: 'http://translate.google.com/translate_t?text=%s&langpair=auto|cs&tbb=1&ie=UTF8'
 		}
-	]) });
+	] });
 }
 
 chrome.runtime.onMessage.addListener(function(message, sender, sendResponse) {
