@@ -5,7 +5,7 @@
 	<title>Search Window BG</title>
 
 	<script>
-	var p = widget.preferences;
+	var p = localStorage;
 
 	if (!p.data) {
 		reset();
@@ -36,7 +36,7 @@
 		]);
 	}
 
-	opera.extension.addEventListener('message', function(e) {
+	chrome.runtime.onMessage.addListener('message', function(e) {
 		var data = e.data;
 		switch (data.action) {
 			case 'reset': reset(); break;

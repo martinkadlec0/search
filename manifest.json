@@ -16,5 +16,9 @@
 	"options_page": "options.html",
 	"icons": {
         "64": "icons/icon64.png"
-    }
+    },
+    "content_scripts": [{
+      "matches": ["<all_urls>"],
+      "js": ["includes/search.js"]
+    }]
 }
