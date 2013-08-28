@@ -11,7 +11,11 @@
 	var wnd = document.createElement('unknown');
 	wnd.style.cssText = 'box-sizing: content-box !important; display: block; z-index: 99999999; position: absolute; word-spacing: 5px; background: white; border: 3px solid #ccc; min-width: 10px; text-align: center; padding: 10px; height: 15px; border-radius: 4px; box-shadow: 0 0 5px black;';
 
-	var icons = saveParse(widget.preferences.data) || [];
+
+	var icons = [];
+	chrome.storage.local.get('data', function(store) {
+		icons = store.data || [];
+	});
 
 	var resetCSS = 'padding: 0; border: 0; margin: 0; float: none; font-size: 0; background: transparent; vertical-align: top; ';
 
