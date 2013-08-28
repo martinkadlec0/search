@@ -9,37 +9,39 @@
 	};
 
 	var wnd = document.createElement('unknown');
-	wnd.style.cssText = 'box-sizing: content-box !important; display: block; z-index: 99999999; position: absolute; word-spacing: 5px; background: white; border: 3px solid #ccc; min-width: 10px; text-align: center; padding: 10px; height: 15px; border-radius: 4px; box-shadow: 0 0 5px black;';
+	wnd.style.cssText = 'box-sizing: content-box !important; display: block; z-index: 99999999; position: absolute; /*word-spacing: 5px;*/ background: white; border: 3px solid #ccc; min-width: 10px; text-align: center; padding: 10px; height: 15px; border-radius: 4px; box-shadow: 0 0 5px black;';
 
+
+	
+
+	var resetCSS = 'padding: 0; border: 0; margin: 0; float: none; font-size: 0; background: transparent; vertical-align: top; ';
+	var i;
 
 	var icons = [];
 	chrome.storage.local.get('data', function(store) {
 		icons = store.data || [];
-		alert(store.data.length);
-	});
+		
+	
+		for (i=0; i<icons.length; i++) {
+			if (!icons[i].disabled) {
+				icons[i].lnk = document.createElement('a');
+				icons[i].lnk.style.cssText = resetCSS + ' display: inline-block;' + (i + 1 < icons.length ? 'margin-right: 5px' : '');
+				icons[i].lnk.innerHTML = '<img style="' + resetCSS + ' display: inline-block;" width="16" height="16" src="' + icons[i].icon + '">';
+				if (icons[i].title) {
+					icons[i].lnk.title = icons[i].title;
+				}
 
-	var resetCSS = 'padding: 0; border: 0; margin: 0; float: none; font-size: 0; background: transparent; vertical-align: top; ';
-
-	var i;
-	for (i=0; i<icons.length; i++) {
-		if (!icons[i].disabled) {
-			icons[i].lnk = document.createElement('a');
-			icons[i].lnk.style.cssText = resetCSS + ' display: inline;';
-			icons[i].lnk.innerHTML = '<img style="' + resetCSS + ' display: inline-block;" width="16" height="16" src="' + icons[i].icon + '">';
-			if (icons[i].title) {
-				icons[i].lnk.title = icons[i].title;
-			}
-
-			if (!/javascript:/.test(icons[i].url)) {
-				icons[i].lnk.target = '_blank';
-			}
-			
-			wnd.appendChild(icons[i].lnk);	
-			if (i + 1 < icons.length) {
-				wnd.appendChild(document.createTextNode(' '));
+				if (!/javascript:/.test(icons[i].url)) {
+					icons[i].lnk.target = '_blank';
+				}
+				
+				wnd.appendChild(icons[i].lnk);	
+				if (i + 1 < icons.length) {
+					wnd.appendChild(document.createTextNode(' '));
+				}
 			}
 		}
-	}
+	});
 
 	document.addEventListener('mouseup', function(e) {
 		// When you click on link with selected text, the selection remains -> wnd apperas again
